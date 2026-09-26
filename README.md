@@ -188,7 +188,10 @@ The lock file resolves the packages as of the submission date (`exclude-newer = 
   location-specific changes (for example, the Swiss data has no cholesterol values and too few samples per class for
   some ROC curves).
 - **Not reproducible to the digit.** The random forest and the neural network have no fixed seed, so reruns select
-  slightly different features and give different accuracies.
+  slightly different features and give different accuracies. A rerun in 2026 with the locked versions gave, for
+  example, 0.83 instead of 0.84 for logistic regression on Cleveland.
+- **Mixed-case plot names.** `Vancouver_Analysis.py` saves `plots/vancouver_*.png`, while most committed plots from
+  2021 are named `Vancouver_*.png`. On case-sensitive file systems a rerun adds new files instead of replacing them.
 - **Patient ID and dates as features.** The random forest selects `id` and `cday` for some locations; the report
   discusses this.
 - **R autoencoder not tested again.** It needs R with the `keras` and `tensorflow` packages and a matching Python

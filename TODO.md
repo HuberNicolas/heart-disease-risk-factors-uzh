@@ -9,8 +9,8 @@ Open tasks for the repository. See also [Known issues](README.md#known-issues).
 - [x] Lint and format the scripts with Ruff (only unused imports removed)
 - [x] Remove the duplicate `heart-disease.zip` and editor files; move report and slides to `submission/`
 - [x] README, dataset documentation, MIT license, reproduce workflow
-- [ ] Check the first run of the Reproduce workflow (TensorFlow 2.4 cannot run on Apple Silicon)
-- [ ] Rename the GitHub repository to `heart-disease-risk-factors-uzh`
+- [x] Check the first run of the Reproduce workflow: all four locations run; accuracies within a few points of 2021
+- [x] Rename the GitHub repository to `heart-disease-risk-factors-uzh`
 - [ ] Create GitHub releases `v1.0.0` (submission, with report and slides as assets) and `v1.1.0`
 - [ ] Test `Autoencoders.R` again (R 4.0, keras for R)
 - [ ] Add the lecturer of the course to the README
