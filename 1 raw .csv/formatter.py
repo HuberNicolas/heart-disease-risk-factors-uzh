@@ -3,19 +3,19 @@ import csv
 # just run one section each time!
 
 # switzerland
-f = open('switzerland.csv')
+f = open("switzerland.csv")
 csv_f = csv.reader(f)
 row_count = 1
 patient = ""
 print("SWITZERLAND")
-with open("switzerland_76.csv","w",newline="") as file:
+with open("switzerland_76.csv", "w", newline="") as file:
     writer = csv.writer(file)
     for row in csv_f:
-        row = [r.replace(" ", ", ") for r in row] # insert commas
-        
+        row = [r.replace(" ", ", ") for r in row]  # insert commas
+
         # concatenate cells 1-10 (or 1-12)
-        if(row_count % 10 == 0):
-            #print(row)
+        if row_count % 10 == 0:
+            # print(row)
             patient += row[0]
             print(patient)
             patientList = patient.split(", ")
@@ -23,10 +23,10 @@ with open("switzerland_76.csv","w",newline="") as file:
             row_count += 1
             patient = ""
         else:
-            #print(row_count)
+            # print(row_count)
             str = row[0]
             str += ", "
-            #print(str)
+            # print(str)
             patient += str
             str = ""
             row_count += 1
