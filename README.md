@@ -4,22 +4,21 @@
 
 **Compares risk factors for heart disease across the four locations of the UCI Heart Disease dataset**
 
-![Python](https://img.shields.io/badge/Python-3.8-3776AB?logo=python&logoColor=white)
-![R](https://img.shields.io/badge/R-4.0-276DC3?logo=r&logoColor=white)
-![scikit-learn](https://img.shields.io/badge/scikit--learn-0.24-F7931E?logo=scikitlearn&logoColor=white)
-![TensorFlow](https://img.shields.io/badge/TensorFlow-2.4-FF6F00?logo=tensorflow&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3.12%20|%203.13-3776AB?logo=python&logoColor=white)
+![scikit-learn](https://img.shields.io/badge/scikit--learn-F7931E?logo=scikitlearn&logoColor=white)
+![pandas](https://img.shields.io/badge/pandas-150458?logo=pandas&logoColor=white)
 ![uv](https://img.shields.io/badge/uv-DE5FE9?logo=uv&logoColor=white)
 ![Ruff](https://img.shields.io/badge/Ruff-D7FF64?logo=ruff&logoColor=black)
 ![License](https://img.shields.io/badge/License-MIT-yellow)
-[![Reproduce](https://github.com/HuberNicolas/heart-disease-risk-factors-uzh/actions/workflows/reproduce.yml/badge.svg)](https://github.com/HuberNicolas/heart-disease-risk-factors-uzh/actions/workflows/reproduce.yml)
+[![CI](https://github.com/HuberNicolas/heart-disease-risk-factors-uzh/actions/workflows/ci.yml/badge.svg)](https://github.com/HuberNicolas/heart-disease-risk-factors-uzh/actions/workflows/ci.yml)
 
-[Quick start](#quick-start) · [Results](#results) · [Report (PDF)](submission/report.pdf) · [Slides (PDF)](submission/presentation.pdf)
+[Quick start](#quick-start) · [Results](#results) · [Methodology](docs/methodology.md) · [Original project (v1)](https://github.com/HuberNicolas/heart-disease-risk-factors-uzh/tree/v1.1.0)
 
 </div>
 
-Group project for the course *Introduction to Data Science* at the University of Zurich, spring semester 2021. We
-used all 76 attributes of the UCI Heart Disease dataset instead of the usual 14 and ran the same pipeline on each of
-the four locations (Cleveland, Hungary, Switzerland, Long Beach VA) to answer three questions:
+The UCI Heart Disease dataset has records from four hospitals with 76 attributes each; most studies use only 14 of
+them and only the Cleveland data. This project uses all attributes of all four locations and runs the same pipeline
+on each one to answer three questions:
 
 1. Are some parameters more likely to be associated with heart disease?
 2. Are there differences between the locations?
@@ -27,16 +26,19 @@ the four locations (Cleveland, Hungary, Switzerland, Long Beach VA) to answer th
 
 ## Features
 
-- 🧹 Parses the raw 76-attribute files, where one patient spans several lines, into one CSV per location
-- 📊 Exploratory plots: heart rate, cholesterol and blood pressure against age and target, correlations, age and sex distributions
-- 🌲 Feature selection with a random forest (top 25 features)
-- 🗺️ Dimensionality reduction with t-SNE, UMAP and an autoencoder (R/Keras)
-- 🤖 Classification with logistic regression, naive Bayes, SVM (linear, polynomial, RBF), KNN and a small neural network, with confusion matrices and ROC curves
+- 🧹 Reads the raw archive files directly, one patient per row, all 76 attributes
+- 🚫 Excludes attributes that leak the diagnosis (angiography results), identifiers and dates by default
+- 📊 Exploratory plots: heart rate, cholesterol and blood pressure against age and diagnosis, correlations, age and sex
+- 🌲 Feature selection with a random forest
+- 🗺️ Two-dimensional embeddings with t-SNE, UMAP and an autoencoder
+- 🤖 Seven classifiers against a majority-class baseline, with test accuracy, balanced accuracy, ROC AUC and cross-validation
+- 🔁 Fixed seeds: the same command gives the same numbers
 
 > [!NOTE]
-> This is a student project from 2021, our first steps in data science. The code is kept as submitted: the
-> dependencies are pinned to May 2021 and the analysis is not developed further in the `v1.x` releases. The
-> submitted state is tagged [`v1.0.0`](https://github.com/HuberNicolas/heart-disease-risk-factors-uzh/releases/tag/v1.0.0).
+> This started as a group project for *Introduction to Data Science* at the University of Zurich in spring 2021, our
+> first steps in data science. Version 2 is a rewrite of the analysis as a Python package. The code as submitted is
+> tagged [`v1.0.0`](https://github.com/HuberNicolas/heart-disease-risk-factors-uzh/releases/tag/v1.0.0), and a
+> runnable version with the original dependencies is [`v1.1.0`](https://github.com/HuberNicolas/heart-disease-risk-factors-uzh/tree/v1.1.0).
 
 ## Contents
 
@@ -57,146 +59,168 @@ the four locations (Cleveland, Hungary, Switzerland, Long Beach VA) to answer th
 
 | Area | Technologies |
 |---|---|
-| Language | ![Python](https://img.shields.io/badge/Python_3.8-3776AB?logo=python&logoColor=white) ![R](https://img.shields.io/badge/R_4.0-276DC3?logo=r&logoColor=white) |
-| Data | ![pandas](https://img.shields.io/badge/pandas_1.2-150458?logo=pandas&logoColor=white) ![NumPy](https://img.shields.io/badge/NumPy_1.19-013243?logo=numpy&logoColor=white) |
-| Machine learning | ![scikit-learn](https://img.shields.io/badge/scikit--learn_0.24-F7931E?logo=scikitlearn&logoColor=white) ![TensorFlow](https://img.shields.io/badge/TensorFlow_2.4-FF6F00?logo=tensorflow&logoColor=white) ![Keras](https://img.shields.io/badge/Keras_2.4-D00000?logo=keras&logoColor=white) ![UMAP](https://img.shields.io/badge/umap--learn_0.5-4B8BBE) |
-| Plots | ![Matplotlib](https://img.shields.io/badge/Matplotlib_3.4-11557C) ![seaborn](https://img.shields.io/badge/seaborn_0.11-4C72B0) ![ggplot2](https://img.shields.io/badge/ggplot2-276DC3?logo=r&logoColor=white) |
-| Tooling | ![uv](https://img.shields.io/badge/uv-DE5FE9?logo=uv&logoColor=white) ![Ruff](https://img.shields.io/badge/Ruff-D7FF64?logo=ruff&logoColor=black) ![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-2088FF?logo=githubactions&logoColor=white) |
+| Language | ![Python](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=white) |
+| Data | ![pandas](https://img.shields.io/badge/pandas-150458?logo=pandas&logoColor=white) ![NumPy](https://img.shields.io/badge/NumPy-013243?logo=numpy&logoColor=white) |
+| Machine learning | ![scikit-learn](https://img.shields.io/badge/scikit--learn-F7931E?logo=scikitlearn&logoColor=white) ![UMAP](https://img.shields.io/badge/umap--learn-4B8BBE) |
+| Plots | ![Matplotlib](https://img.shields.io/badge/Matplotlib-11557C) ![seaborn](https://img.shields.io/badge/seaborn-4C72B0) |
+| Tooling | ![uv](https://img.shields.io/badge/uv-DE5FE9?logo=uv&logoColor=white) ![Ruff](https://img.shields.io/badge/Ruff-D7FF64?logo=ruff&logoColor=black) ![pytest](https://img.shields.io/badge/pytest-0A9EDC?logo=pytest&logoColor=white) ![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-2088FF?logo=githubactions&logoColor=white) |
 
 ## Pipeline
 
 ```mermaid
 flowchart LR
-    raw["0 raw .data<br/>UCI files"] -->|rename| csv["1 raw .csv"]
-    csv -->|formatter.py| fmt["2 formatted .csv<br/>one patient per row"]
-    fmt -->|add header| data["data/<br/>*_76_header.csv"]
-    data --> analysis["*_Analysis.py<br/>(one per location)"]
-    analysis --> plots["plots/"]
-    analysis --> rf["rand_forest_feature_selection(25)/"]
-    analysis --> logs["logs/ (console output)"]
-    data -. "X.csv / y.csv (Cleveland)" .-> ae["Autoencoders.R"]
+    raw["data/raw/*.data<br/>UCI archive"] --> load["data.py<br/>parse, -9 → missing"]
+    load --> select["select features<br/>drop leakage, IDs, dates"]
+    select --> eda["exploratory plots"]
+    select --> split["stratified split 75/25"]
+    split --> rf["random forest<br/>top 25 features"]
+    rf --> emb["t-SNE · UMAP · autoencoder"]
+    rf --> clf["7 classifiers + baseline"]
+    clf --> out["results/&lt;location&gt;/<br/>metrics, figures"]
+    emb --> out
+    eda --> out
 ```
 
-| Step | Where | What |
-|---|---|---|
-| 1 | [`0 raw .data/`](0%20raw%20.data/) | Original files from the UCI archive, with MD5 hashes |
-| 2 | [`1 raw .csv/`](1%20raw%20.csv/) | The four used files renamed to `.csv`, plus [`formatter.py`](1%20raw%20.csv/formatter.py) |
-| 3 | [`2 formatted .csv/`](2%20formatted%20.csv/) | One patient per row, 76 columns, no header |
-| 4 | [`data/`](data/) | Same data with a header row; input of the analysis |
-| 5 | `*_Analysis.py` | Preprocessing, plots, feature selection, reduction and classification for one location |
+| Module | Content |
+|---|---|
+| [`data.py`](src/heart_disease/data.py) | Attribute list, parser for the raw files, feature groups and selection |
+| [`analysis.py`](src/heart_disease/analysis.py) | Split, feature importance, classifiers, evaluation, embeddings |
+| [`plots.py`](src/heart_disease/plots.py) | The figures, one PNG each |
+| [`pipeline.py`](src/heart_disease/pipeline.py) | Runs everything for one location and writes the results |
+| [`cli.py`](src/heart_disease/cli.py) | `heart-disease run` and `heart-disease info` |
 
 ## Repository structure
 
 | Path | Content |
 |---|---|
-| [`Cleveland_Analysis.py`](Cleveland_Analysis.py), [`Hungarian_Analysis.py`](Hungarian_Analysis.py), [`Switzerland_Analysis.py`](Switzerland_Analysis.py), [`Vancouver_Analysis.py`](Vancouver_Analysis.py) | Analysis per location (`Vancouver` is Long Beach VA, see [Known issues](#known-issues)) |
-| [`Autoencoders.R`](Autoencoders.R) | Autoencoder for the 2D/3D reduction of the 25 selected features |
-| [`data/`](data/) | Input CSVs with header; `X.csv`/`y.csv` are the Cleveland features and target for the R script |
-| [`rand_forest_feature_selection(25)/`](rand_forest_feature_selection(25)/) | The 25 features selected by the random forest, per location |
-| [`plots/`](plots/) | Plots from the run in May 2021, numbered as in the report |
-| [`logs/`](logs/) | Console output of the four scripts from May 2021 |
-| [`accuracies.xlsx`](accuracies.xlsx) | Accuracy table of all classifiers |
-| [`submission/`](submission/) | Report and slides as submitted, poll questions from the presentation |
-| [`docs/`](docs/) | Documentation, including the report as Markdown |
+| [`src/heart_disease/`](src/heart_disease/) | The package |
+| [`tests/`](tests/) | pytest tests for the parser, feature selection and pipeline |
+| [`data/raw/`](data/raw/) | The UCI Heart Disease archive folder as downloaded in 2021, with MD5 hashes |
+| [`docs/`](docs/) | Methodology, dataset and the report of 2021 |
+| [`submission/`](submission/) | Report, slides, accuracy table and poll of the 2021 submission |
+| `results/` | Output of `heart-disease run` (not committed) |
 
 ## Quick start
 
-TensorFlow 2.4 has wheels for x86_64 only and needs a CPU with AVX. It does not run on Apple Silicon, not even
-through Rosetta or Docker. Use x86_64 Linux or Windows, or let the [Reproduce](.github/workflows/reproduce.yml)
-workflow run the scripts.
+Prerequisites: [uv](https://docs.astral.sh/uv/). It installs a suitable Python if needed.
 
-Prerequisites: [uv](https://docs.astral.sh/uv/). uv installs Python 3.8 if it is missing.
-
-1. Install the locked dependencies:
+1. Install the package and its dependencies:
 
    ```bash
    uv sync
    ```
 
-2. Run the analysis for one location from the repository root. The script overwrites the plots in `plots/` and the
-   CSVs in `rand_forest_feature_selection(25)/`:
+2. Show patients, features and class distribution per location:
 
    ```bash
-   uv run python Cleveland_Analysis.py
+   uv run heart-disease info
    ```
 
-   The other locations work the same way (`Hungarian_Analysis.py`, `Switzerland_Analysis.py`,
-   `Vancouver_Analysis.py`). Set `MPLBACKEND=Agg` to save the plots without opening windows.
+3. Run the analysis for all four locations (about a minute). Results go to `results/`:
 
-3. Optional, the autoencoder in R (not tested again, see [Known issues](#known-issues)): install the R packages
-   `tensorflow`, `keras`, `caTools`, `dplyr`, `ggplot2` and `plotly`, then run the script from `data/`, where it
-   reads `X.csv` and `y.csv`.
+   ```bash
+   uv run heart-disease run
+   ```
+
+4. Or one location, without the slower embeddings:
+
+   ```bash
+   uv run heart-disease run -l cleveland --skip-embeddings
+   ```
+
+| Option | Default | Meaning |
+|---|---|---|
+| `-l`, `--location` | all | `cleveland`, `hungary`, `switzerland` or `long-beach-va`; repeatable |
+| `-o`, `--output` | `results` | Output folder (`run` only) |
+| `--seed` | `0` | Random seed for split, models and embeddings (`run` only) |
+| `--top-k` | `25` | Number of features the random forest selects (`run` only) |
+| `--skip-embeddings` | off | Skip t-SNE, UMAP and the autoencoder (`run` only) |
+| `--original-features` | off | Use the feature set of 2021, including angiography results, patient ID and dates |
+
+Each location gets a folder `results/<location>/` with `metrics.csv`, `feature_importance.csv`, `summary.json` and
+`figures/`; `results/accuracy.md` compares the test accuracy of all locations.
 
 ## Results
 
-Accuracy on the test set (25 %, `random_state=101`), from the report:
+Test accuracy (25 % of the patients, seed 0) with the default features. The baseline always predicts the most
+frequent class:
 
-| Classifier | Cleveland | Hungary | Long Beach VA | Switzerland |
+| Model | Cleveland | Hungary | Switzerland | Long Beach VA |
 |---|---|---|---|---|
-| Logistic regression | 0.84 | 0.59 | 0.74 | 0.65 |
-| Naive Bayes | 0.77 | 0.46 | 0.54 | – |
-| SVM, linear | 0.86 | 0.58 | 0.84 | – |
-| SVM, polynomial (degree 3) | 0.68 | 0.62 | 0.38 | – |
-| SVM, RBF | 0.58 | 0.62 | 0.20 | – |
-| KNN (k = 5) | 0.73 | 0.57 | 0.46 | 0.42 |
-| Neural network | 0.48 | 0.42 | 0.08 | 0.23 |
+| Majority class (baseline) | 0.55 | 0.64 | 0.39 | 0.28 |
+| Logistic regression | 0.65 | 0.58 | 0.32 | 0.40 |
+| Naive Bayes | 0.65 | 0.50 | 0.26 | 0.28 |
+| SVM, linear | 0.63 | 0.68 | 0.42 | 0.28 |
+| SVM, polynomial (degree 3) | 0.56 | 0.61 | 0.35 | 0.34 |
+| SVM, RBF | 0.59 | 0.64 | 0.39 | 0.28 |
+| KNN (k = 5) | 0.59 | 0.66 | 0.29 | 0.30 |
+| Neural network | 0.59 | 0.64 | 0.23 | 0.32 |
 
-The full discussion, the top features per location and the conclusion are in the
-[report](docs/report.md).
+Most important features (random forest):
+
+| Location | Top 5 |
+|---|---|
+| Cleveland | `thalach`, `thal`, `thaldur`, `ca`, `chol` |
+| Hungary | `oldpeak`, `thalach`, `cp`, `exang`, `thalrest` |
+| Switzerland | `age`, `thalach`, `trestbps`, `thalrest`, `tpeakbps` |
+| Long Beach VA | `age`, `chol`, `years`, `thalach`, `tpeakbps` |
+
+What this means, compared with 2021:
+
+- **The high accuracies of 2021 came from target leakage.** With `--original-features`, logistic regression reaches
+  0.86 on Cleveland and the top features are the vessels `laddist`, `cxmain` and `om1`. These are angiography
+  results, and the diagnosis `num` is defined from them. Without them the models are barely better than the baseline.
+- **Telling the five levels apart is hard** with a few hundred patients per location; the balanced accuracy is at
+  most about 0.5. The maximum heart rate in the exercise test (`thalach`) is among the top features everywhere.
+- **The locations differ** in their class distribution (Hungary has 64 % healthy patients, Switzerland 7 %) and in
+  which features matter: exercise test results in Cleveland and Hungary, age and blood pressure in Switzerland, age and
+  cholesterol in Long Beach.
+
+See [docs/methodology.md](docs/methodology.md) for the details.
 
 ## Data
 
 | Source | License | Included |
 |---|---|---|
-| [UCI Heart Disease](https://archive.ics.uci.edu/dataset/45/heart+disease) (Janosi, Steinbrunn, Pfisterer, Detrano, 1989) | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) | Yes, the whole archive folder in `0 raw .data/` |
+| [UCI Heart Disease](https://archive.ics.uci.edu/dataset/45/heart+disease) (Janosi, Steinbrunn, Pfisterer, Detrano, 1989) | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) | Yes, the whole archive folder in `data/raw/` |
 
-The pipeline uses `cleveland.data`, `hungarian.data`, `switzerland.data` and `long-beach-va.data`. The other files of
-the archive are included for completeness. See [docs/dataset.md](docs/dataset.md) for the attributes, the class
-distribution and the MD5 hashes.
+The pipeline reads `cleveland.data`, `hungarian.data`, `switzerland.data` and `long-beach-va.data`. See
+[docs/dataset.md](docs/dataset.md) for the attributes, the class distribution and the hashes.
 
 > [!WARNING]
-> `0 raw .data/new.data` is part of the original UCI archive and contains the last names of patients. It is not
-> used by this project.
+> `data/raw/new.data` is part of the original UCI archive and contains the last names of patients. It is not used by
+> this project.
 
 ## Development
 
 | Task | Command |
 |---|---|
-| Install dependencies | `uv sync` |
-| Lint | `uvx ruff check .` |
-| Format | `uvx ruff format .` |
-| Run one location | `uv run python Cleveland_Analysis.py` |
+| Install | `uv sync` |
+| Test | `uv run pytest` |
+| Lint | `uv run ruff check .` |
+| Format | `uv run ruff format .` |
+| Run the analysis | `uv run heart-disease run` |
 
-The lock file resolves the packages as of the submission date (`exclude-newer = 2021-05-24` in
-[`pyproject.toml`](pyproject.toml)).
+CI runs lint and tests on Python 3.12 and 3.13, then the full analysis; the accuracy table appears in the job summary
+and the results are uploaded as an artifact.
 
 ## Documentation
 
 | Guide | Content |
 |---|---|
-| [docs/report.md](docs/report.md) | Project report as submitted (Markdown version of [`submission/report.pdf`](submission/report.pdf)) |
-| [docs/dataset.md](docs/dataset.md) | Data source, used files, preprocessing, hashes |
-| [submission/presentation.pdf](submission/presentation.pdf) | Slides of the final presentation |
+| [docs/methodology.md](docs/methodology.md) | Feature groups, preprocessing, models, metrics and differences to 2021 |
+| [docs/dataset.md](docs/dataset.md) | Data source, files, class distribution, hashes |
+| [docs/report.md](docs/report.md) | Report of 2021 as submitted, including the attribute list |
+| [submission/](submission/) | Report and slides of 2021 as PDF |
 
 ## Known issues
 
-- **„Vancouver“ is Long Beach VA.** The scripts and plots call the Long Beach dataset `Vancouver`; VA stands for the
-  V.A. Medical Center in Long Beach, California. The names are kept as submitted.
 - **Cleveland has 282 of 303 patients.** `cleveland.data` in the UCI archive is partly corrupted (see
-  `0 raw .data/WARNING`), and the preprocessing keeps 282 patients.
-- **Four copies of one script.** The analysis scripts are nearly identical and differ in the input file and small
-  location-specific changes (for example, the Swiss data has no cholesterol values and too few samples per class for
-  some ROC curves).
-- **Not reproducible to the digit.** The random forest and the neural network have no fixed seed, so reruns select
-  slightly different features and give different accuracies. A rerun in 2026 with the locked versions gave, for
-  example, 0.83 instead of 0.84 for logistic regression on Cleveland.
-- **Mixed-case plot names.** `Vancouver_Analysis.py` saves `plots/vancouver_*.png`, while most committed plots from
-  2021 are named `Vancouver_*.png`. On case-sensitive file systems a rerun adds new files instead of replacing them.
-- **Patient ID and dates as features.** The random forest selects `id` and `cday` for some locations; the report
-  discusses this.
-- **R autoencoder not tested again.** It needs R with the `keras` and `tensorflow` packages and a matching Python
-  TensorFlow; it reads `X.csv`/`y.csv` from the working directory.
-- **Apple Silicon.** TensorFlow 2.4 does not run there (see [Quick start](#quick-start)).
+  `data/raw/WARNING`); the parser skips records without exactly 76 values.
+- **Small classes.** Switzerland has 8 healthy patients and Cleveland 12 with `num = 4`, so test sets contain only one
+  to three patients of some classes and the metrics vary with the seed.
+- **Apple Silicon with an Intel Homebrew Python.** `llvmlite` (needed by UMAP) has no wheels for x86_64 macOS. Use an
+  arm64 Python, for example `uv sync --python cpython-3.13-macos-aarch64-none`.
 
 ## Authors
 
@@ -204,7 +228,7 @@ The lock file resolves the packages as of the submission date (`exclude-newer = 
 - Nathalie Guttmann
 - Nicolas Huber ([@HuberNicolas](https://github.com/HuberNicolas))
 
-Course project, *Introduction to Data Science*, University of Zurich, spring semester 2021.
+Course project, *Introduction to Data Science*, University of Zurich, spring semester 2021; rewritten in 2026.
 
 ## Acknowledgements
 
@@ -219,4 +243,4 @@ David W. Aha. As requested by the authors, please cite:
 ## License
 
 The code, the report and the slides are licensed under the [MIT License](LICENSE). The UCI Heart Disease data in
-`0 raw .data/` and the files derived from it keep their own license, [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
+`data/raw/` keeps its own license, [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
