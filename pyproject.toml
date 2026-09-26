@@ -1,0 +1,31 @@
+[project]
+name = "heart-disease-risk-factors-uzh"
+version = "1.1.0"
+description = "Risk factors for heart disease in four locations of the UCI Heart Disease dataset (course project, UZH 2021)"
+readme = "README.md"
+requires-python = "==3.8.*"
+authors = [
+    { name = "Kalvin Dobler" },
+    { name = "Nathalie Guttmann" },
+    { name = "Nicolas Huber", email = "nicolas.huber.dev@gmail.com" },
+]
+license = { text = "MIT" }
+dependencies = [
+    "matplotlib",
+    "numpy",
+    "pandas",
+    "plotly",
+    "scikit-learn",
+    "seaborn",
+    # The logs from 2021 show TensorFlow 2.4; the scripts import the standalone keras package that goes with it.
+    "keras==2.4.3",
+    "tensorflow==2.4.1",
+    "umap-learn",
+]
+
+[tool.uv]
+package = false
+# Reproduce the package versions available at the time of the submission (24 May 2021).
+exclude-newer = "2021-05-24T00:00:00Z"
+# Only the linux/amd64 and Windows/macOS x86_64 wheels of TensorFlow exist for this time.
+environments = ["platform_machine == 'x86_64' or platform_machine == 'AMD64'"]
