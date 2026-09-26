@@ -13,7 +13,6 @@ Open tasks for the repository. See also [Known issues](README.md#known-issues).
 - [x] Rename the GitHub repository to `heart-disease-risk-factors-uzh`
 - [ ] Create GitHub releases `v1.0.0` (submission, with report and slides as assets) and `v1.1.0`
 - [ ] Test `Autoencoders.R` again (R 4.0, keras for R)
-- [ ] Add the lecturer of the course to the README
 
 ## 2. Modernisation (v2)
 
