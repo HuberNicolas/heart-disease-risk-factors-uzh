@@ -1,31 +1,50 @@
 [project]
 name = "heart-disease-risk-factors-uzh"
-version = "1.1.0"
-description = "Risk factors for heart disease in four locations of the UCI Heart Disease dataset (course project, UZH 2021)"
+version = "2.0.0"
+description = "Risk factors for heart disease in the four locations of the UCI Heart Disease dataset"
 readme = "README.md"
-requires-python = "==3.8.*"
+requires-python = ">=3.12"
 authors = [
     { name = "Kalvin Dobler" },
     { name = "Nathalie Guttmann" },
     { name = "Nicolas Huber", email = "nicolas.huber.dev@gmail.com" },
 ]
-license = { text = "MIT" }
+license = "MIT"
+license-files = ["LICENSE"]
 dependencies = [
-    "matplotlib",
-    "numpy",
-    "pandas",
-    "plotly",
-    "scikit-learn",
-    "seaborn",
-    # The logs from 2021 show TensorFlow 2.4; the scripts import the standalone keras package that goes with it.
-    "keras==2.4.3",
-    "tensorflow==2.4.1",
-    "umap-learn",
+    "matplotlib>=3.10",
+    "numpy>=2.2",
+    "pandas>=2.2",
+    "scikit-learn>=1.6",
+    "seaborn>=0.13",
+    "umap-learn>=0.5.7",
 ]
 
-[tool.uv]
-package = false
-# Reproduce the package versions available at the time of the submission (24 May 2021).
-exclude-newer = "2021-05-24T00:00:00Z"
-# Only the linux/amd64 and Windows/macOS x86_64 wheels of TensorFlow exist for this time.
-environments = ["platform_machine == 'x86_64' or platform_machine == 'AMD64'"]
+[project.scripts]
+heart-disease = "heart_disease.cli:main"
+
+[dependency-groups]
+dev = ["pytest>=8", "ruff>=0.12"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/heart_disease"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+# Deprecations inside seaborn 0.13, not in this code.
+filterwarnings = ["ignore::DeprecationWarning:seaborn", "ignore::PendingDeprecationWarning:seaborn"]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 120
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+
+[tool.ruff.lint.flake8-bugbear]
+# Frozen dataclasses, safe as defaults.
+extend-immutable-calls = ["heart_disease.data.FeatureSet", "heart_disease.pipeline.Settings"]
