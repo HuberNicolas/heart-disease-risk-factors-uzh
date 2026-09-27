@@ -32,7 +32,7 @@ on each one to answer three questions:
 - 🌲 Feature selection with a random forest
 - 🗺️ Two-dimensional embeddings with t-SNE, UMAP and an autoencoder
 - 🤖 Seven classifiers against a majority-class baseline, with test accuracy, balanced accuracy, ROC AUC and cross-validation
-- 🔁 Fixed seeds: the same command gives the same numbers
+- 🔁 Fixed seeds: the same command gives the same numbers on the same platform
 
 > [!NOTE]
 > This started as a group project for *Introduction to Data Science* at the University of Zurich in spring 2021, our
@@ -142,8 +142,8 @@ Each location gets a folder `results/<location>/` with `metrics.csv`, `feature_i
 
 ## Results
 
-Test accuracy (25 % of the patients, seed 0) with the default features. The baseline always predicts the most
-frequent class:
+Test accuracy (25 % of the patients, seed 0) with the default features, from the CI run on Linux. The baseline
+always predicts the most frequent class:
 
 | Model | Cleveland | Hungary | Switzerland | Long Beach VA |
 |---|---|---|---|---|
@@ -154,7 +154,7 @@ frequent class:
 | SVM, polynomial (degree 3) | 0.56 | 0.61 | 0.35 | 0.34 |
 | SVM, RBF | 0.59 | 0.64 | 0.39 | 0.28 |
 | KNN (k = 5) | 0.59 | 0.66 | 0.29 | 0.30 |
-| Neural network | 0.59 | 0.64 | 0.23 | 0.32 |
+| Neural network | 0.65 | 0.64 | 0.23 | 0.38 |
 
 Most important features (random forest):
 
@@ -219,6 +219,8 @@ and the results are uploaded as an artifact.
   `data/raw/WARNING`); the parser skips records without exactly 76 values.
 - **Small classes.** Switzerland has 8 healthy patients and Cleveland 12 with `num = 4`, so test sets contain only one
   to three patients of some classes and the metrics vary with the seed.
+- **Neural network differs by platform.** Its results depend on the floating-point library; on macOS the accuracy
+  differs by a few points from the Linux numbers above. All other models give the same numbers.
 - **Apple Silicon with an Intel Homebrew Python.** `llvmlite` (needed by UMAP) has no wheels for x86_64 macOS. Use an
   arm64 Python, for example `uv sync --python cpython-3.13-macos-aarch64-none`.
 
