@@ -7,7 +7,6 @@ Open tasks for the repository. See also [Known issues](README.md#known-issues).
 - [x] Tag the submission commit ("Submission via OLAT", 24 May 2021) as `v1.0.0`, release with report and slides
 - [x] `v1.1.0`: dependencies of May 2021, Ruff, docs, MIT license, reproduce workflow (green on GitHub Actions)
 - [x] Rename the GitHub repository to `heart-disease-risk-factors-uzh`
-- [ ] Test the R autoencoder of v1 again (R 4.0, keras for R); replaced by scikit-learn in v2
 
 ## 2. Modernisation (v2)
 
