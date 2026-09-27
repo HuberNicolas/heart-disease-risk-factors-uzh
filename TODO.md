@@ -17,8 +17,8 @@ Open tasks for the repository. See also [Known issues](README.md#known-issues).
 - [x] Fixed seeds, results as files, baseline and balanced accuracy
 - [x] Autoencoder and neural network in scikit-learn instead of Keras and R
 - [x] Tests and CI
-- [ ] Check the first CI run on GitHub
-- [ ] Release `v2.0.0`
+- [x] Check the first CI run on GitHub
+- [x] Release `v2.0.0`
 
 ## 3. Ideas
 
